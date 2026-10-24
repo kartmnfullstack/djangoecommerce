@@ -1,0 +1,49 @@
+{% extends 'pages/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Dashboard Page
+{% endblock %}
+
+{% block content %}
+<!-- <ul>
+        <li>            
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+                            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </li>
+</ul> -->
+<div class="main-dashboard">
+    <div class="sidemenu">
+        <ul>
+            <li><a href="{% url 'profile' %}?query=home">Home</a></li>
+            <li><a href="{% url 'profile' %}?query=orders">Orders</a></li>
+            <li><a href="{% url 'profile' %}?query=wishlist">Wishlist</a></li>
+            <li> <form action="{% url 'logout' %}" method="post" class="logout-form" id="sidelogout">
+                                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+                </form>
+            </li>
+
+        </ul>
+    </div>
+
+    <main class="content-display">
+        {% if c == "home" or not c %}
+            <h2 id="homeheader">Welcome, {{ user.username }}</h2>
+            <p id="homecontent">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, beatae! Dolorem tenetur voluptas ad delectus eaque numquam sint architecto minima et, aliquam laboriosam hic sed aut dolores consequatur. Accusantium, quam?</p>
+        {% endif %}
+
+        {% if c == "orders" %}
+            <h2 id="orderheader">Welcome to Orders</h2>
+            <p id="ordercontent">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, beatae! Dolorem tenetur voluptas ad delectus eaque numquam sint architecto minima et, aliquam laboriosam hic sed aut dolores consequatur. Accusantium, quam?</p>
+        {% endif %}
+        {% if c == "wishlist" %}
+            <h2 id="wishlistheader">Welcome to Wishlist</h2>
+            <p id="wishlistcontent">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, beatae! Dolorem tenetur voluptas ad delectus eaque numquam sint architecto minima et, aliquam laboriosam hic sed aut dolores consequatur. Accusantium, quam?</p>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

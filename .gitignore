@@ -1,0 +1,50 @@
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Django Configuration & Local Secrets
+.env
+.env.local
+local_settings.py
+
+# Databases (Keep local development data out of production)
+*.sqlite3
+*.sqlite3-journal
+
+# Logs & Runtime Records
+*.log
+logs/
+*.pot
+
+# Media & Static Assets (User uploads and gathered distribution files)
+media/
+staticfiles/
+static_cdn/
+
+# Testing & Coverage Reports
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# OS Specific Files
+.DS_Store
+Thumbs.db
+
+# IDEs & Code Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

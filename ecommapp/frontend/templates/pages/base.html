@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header id="header">
+  
+        <a href="{% url 'mainpage' %}"><img src="{% static 'logo1.jpg' %}" alt="logo" id="logo"></a>
+
+        <button id="button-mobile" aria-label="toggle nav">
+            <span></span>
+            <span></span>
+            <span></span>            
+        </button>
+    
+    <nav>
+        <ul id="ul">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'mainpage' %}">Home</a></li>
+                <li><a href="{% url 'products' %}">Products</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" class="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-button">Logout</button>
+                    </form>
+                </li>
+                <li><a href="{% url 'cart' %}">Cart: <span id="cartqty">{{ cart|length }}</span></a></li>
+
+
+            {% else %}
+                <li><a href="{% url 'mainpage' %}">Home</a></li>
+                <li><a href="{% url 'products' %}">Products</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+    {% block content %}
+
+    {% endblock %}
+<footer>
+    <p>All Rights Reserved.</p>
+</footer>
+
+    {% block extra_js %}
+
+    {% endblock %}
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

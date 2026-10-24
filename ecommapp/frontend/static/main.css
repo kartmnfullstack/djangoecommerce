@@ -1,0 +1,371 @@
+/*Start of Universal Selectors*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+:root{
+    --background-color: #dee7e4;
+    --font-color: #071108;
+    --content-size: 2rem;
+    --navbaritemssize: 2rem;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff;
+      height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+
+a{
+    text-decoration: none;
+    color: var(--font-color);
+}
+
+li{
+    list-style: none;
+}
+
+/*End of Universal Selectors*/
+
+
+/*Start of Nav Menu*/
+
+#header{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    position: relative; /*Only for mobile app*/
+    border-bottom: 0.2rem solid black;
+}
+
+#logo{
+   width: clamp(50px,8vw,150px);
+   height: auto;
+   display: block;
+}
+
+nav{
+    margin-left: auto;
+
+}
+
+#ul{
+    display: flex;
+    gap: 4rem;
+    font-size: var(--navbaritemssize);
+    justify-content: flex-end;
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+}
+
+#ul li a:hover{
+    background-color: beige;
+    padding: 0.5rem;
+}
+
+#button-mobile{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    width: 4rem;
+    height: 4rem;
+}
+
+#button-mobile span{
+    display: block;
+    width: 3rem;
+    height: 3px;
+    background-color: var(--font-color);
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    #button-mobile{
+        display: flex;
+    }
+
+    nav{
+        margin-left: 0;
+    }
+
+    #ul{
+        position: fixed;
+        top: 6rem;
+        right: -100%;
+        width: 100%;
+        height: auto;
+        background-color: var(--background-color);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-top: 4rem;
+        gap: 3rem;
+        z-index: 100;
+        padding-bottom: 4rem;
+    }
+
+    #ul.active{
+        right: 0;
+    }
+    
+    #float{
+        flex-direction: column;
+    }
+
+    #float img{
+        margin: auto;
+    }
+    
+    }
+
+/*End of Nav Menu*/
+
+/*Footer CSS*/
+
+footer{
+  border: 1px solid rebeccapurple;
+  background-color: #1A202C;
+  color: #F7F9F6;
+  /* width: 100%;
+  height: 2rem; */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid transparent; 
+}
+
+footer p{
+  text-align: center;
+color: #F7F9F6;
+  padding: 0.2rem;
+}
+
+/* End of Footer CSS */
+
+/*Start of Contact CSS*/
+.contactsection {
+  margin: 2rem;
+
+}
+
+.contactsection h2 {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.contactsection .containerforform {
+  margin-top: 2rem;
+}
+
+.contactsection .containerforform form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+#name {
+  width: 50%;
+  padding: 0.5rem;
+}
+
+
+#message {
+  width: 50%;
+  height: 15rem;
+  padding: 0.5rem; 
+  vertical-align: top;
+}
+
+
+
+#submit {
+ 
+  width: 20%;
+  padding: 1rem;
+}
+
+#submit:hover{
+  cursor: pointer;
+
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#name:focus, #message:focus {
+  border-color: #3182CE; 
+}
+
+/*End of Contact CSS*/
+
+/* Firefox */
+/*Login and Register Styles Start*/
+#h2{
+  font-size: 5rem;
+  text-align: center;
+}
+
+#one{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+#b{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;  
+}
+
+#b h3{
+  font-size: 4rem;
+}
+
+#b label{
+  font-size: 2.4rem;
+}
+
+#b .word{
+  width: 20rem;
+  height: 3rem;
+}
+
+#b button{
+  width: 12rem;
+  height: 5rem;
+  margin-left: 5rem;
+  cursor: pointer;
+}
+
+#b button:hover{
+  background-color: blue;
+  color: beige;
+}
+
+/*Login and Register Styles End*/
+
+/* Dashboard Page Styling */
+
+.main-dashboard{
+  display: flex;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidemenu{
+  margin: 0;
+  padding: 0;
+  width: 10rem;
+  background-color: #3182CE;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.sidemenu ul{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  list-style: none;
+}
+
+.sidemenu a{
+  display: block;
+  color: darkorange;
+  padding: 1.6rem;
+  text-decoration: none;
+}
+
+.sidemenu a:hover{
+  text-decoration: underline;
+}
+
+#sidelogout{
+  padding: 1.6rem;
+  color: darkorange !important;
+  text-decoration: none !important;
+}
+
+.content-display{
+  flex-grow: 1;
+  padding: 2rem;
+  margin: 2rem;
+  overflow-y: hidden;
+
+}
+
+/* End of Dashboard Page Styling */ 
+
+/* Start of Logout Page */
+
+.logout-form {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: inherit; 
+    font: inherit;  
+    cursor: pointer;
+    padding: 0;
+}
+
+.logout-button:hover {
+
+    text-decoration: underline; 
+}
+
+
+/* End of Logout Page */
+
+#products{
+  display: flex;
+  gap: 2rem;
+}
+
+.product{
+  display: flex;
+  flex-direction: column;
+}
+
+.paginator{
+  
+}
+
+#search{
+}

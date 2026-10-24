@@ -1,0 +1,108 @@
+
+{% extends 'pages/base.html' %}
+
+{% block title %}
+
+Cart Page
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Cart Summary</h2>
+<p>This has the summary of your cart.</p>
+
+<div>
+    {% for p in products_in_cart %}
+        {{ p }}
+            <label for="qty" id="labelqty">Quantity(max of 10):</label>
+            <input type="number" name="qty" id="qty" min="1" max="10" value="{{ p.quantity }}">
+            <button data-index="{{ p.id }}" class="updatecart">Update Quantity</button>
+            <button type="button" data-index="{{ p.id }}" id="removefromcart">Remove from Cart</button>
+            Subtotal(total price for each product): {{ p.subtotal }}
+            
+    {% endfor %}
+    Total = {{ total }}
+</div>
+<div class="msg"></div>
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+    //Update Cart Ajax Script.
+    $(document).on('click','.updatecart',function(e){
+        e.preventDefault();
+
+        var p_id = $(this).data('index')
+        var c = document.getElementById('qty')
+
+        let c_int = parseInt(c.value,10)
+        if (isNaN(c_int) || c_int < 1) c_int = 1
+        if (c_int > 10) c_int = 10
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'updatecart' %}",
+            data: {
+                product_id: p_id,
+                product_qty: c_int,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post' 
+            },
+            success: function(cartlog){
+               document.getElementById("cartqty").textContent = cartlog.cart_qty
+                    let m = `<div class="message">${cartlog.message}</div>`;
+                    $(".msg").html(m)
+
+                    setTimeout(function(){
+                        $('.message').fadeOut('slow');
+
+                    },5000)
+            },
+
+            error: function(xhr,ermsg,err){
+                console.log(err)
+            }
+        })
+    })
+    //End of UpdateCart Ajax Script.
+
+    //Start of RemoveProduct Ajax Script
+    $(document).on('click','#removefromcart',function(e){
+        e.preventDefault()
+
+        var p_id = $(this).data('index')
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'removefromcart' %}",
+            data:{
+                product_id: p_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post' 
+            },
+
+            success: function(cartlog){
+                    location.reload()
+                    document.getElementById("cartqty").textContent = cartlog.cart_qty
+                    let m = `<div class="message">${cartlog.message}</div>`;
+                    $(".msg").html(m)
+
+                    setTimeout(function(){
+                        $('.message').fadeOut('slow');
+
+                    },5000)
+            },
+
+            error: function(xhr,ermsg,err){
+                console.log(err)
+            }
+
+        })
+    })
+    //End of RemoveProduct Ajax Script
+</script>
+
+{% endblock %}

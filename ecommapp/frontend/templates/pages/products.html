@@ -1,0 +1,103 @@
+{% extends "pages/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Products Page
+{% endblock %}
+
+{% block content %}
+<h2>All Products-Apply search and price to see the results.</h2>
+<form method="get" action="">
+    <div class="search">
+        <label for="search" id="labelsearch">Type to Search:</label>
+        <input type="text" name="search" id="search" placeholder="Search by name" value="{{ q }}">
+    </div>
+    <div class="range">
+        <label for="price" id="labelprice"><span id="price-label">Price: Rs. {{ input_pr }}</span></label>
+        <input type="range" id="price" min="{{ min_p }}" max="{{ max_p }}" value="{{ input_pr }}" step="1" oninput="document.getElementById('price-label').innerText = this.value" name="price">
+    </div>
+    <button>Apply</button>
+</form>
+
+<div id="products">
+        {% for p in page_obj %}
+        <div class="product">
+            <li>Name: {{ p.name }}</li>
+            <li>Price: Rs.{{ p.price }}</li>
+            <label for="qty" id="labelqty">Quantity(max of 10):</label>
+            <input type="number" name="qty" id="qty" min="1" max="10" value="1">
+            <button type="button" value="{{ p.id }}" class="addtocart" data-url="{% url 'addcart' %}">Add to Cart</button>
+            <br>
+            <br>
+        </div>
+        {% empty %}
+            <p>No products match your filter</p>
+        {% endfor %}
+        <div class="paginator">
+            <span>
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&search={{ q }}&price={{ input_pr }}">previous</a>
+                {% endif %}
+
+
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&search={{ q }}&price={{ input_pr }}">next</a>
+                {% endif %}
+
+            </span>
+        </div>
+        <div class="msg"></div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    //Add to Cart Ajax Script.
+     $(document).on('click','.addtocart',function(e){
+            e.preventDefault();
+
+            var b = $(this);
+            var c = document.getElementById('qty')
+
+            let c_int = parseInt(c.value,10)
+            if (isNaN(c_int) || c_int < 1) c_int = 1
+            if (c_int > 10) c_int = 10
+            $.ajax({
+                type: 'POST',
+                url: b.data('url'),
+                data: {
+                    product_id: b.val(),
+                    product_qty: c_int,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                success: function(cartlog){
+                    document.getElementById("cartqty").textContent = cartlog.cart_qty
+                    let m = `<div class="message">${cartlog.message}</div>`;
+                    $(".msg").html(m)
+
+                    setTimeout(function(){
+                        $('.message').fadeOut('slow');
+
+                    },5000)
+                },
+                error: function(xhr,ermsg,err){
+                    if (xhr.status == 401){
+                        let res = JSON.parse(xhr.responseText)
+
+                        window.location.href = res.redirect_url
+                    }else{
+                        console.log(xhr.statusText)
+                    }
+                }
+            });
+        })
+        //End of Add to Cart Ajax Script.
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "pages/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    Contact Page
+{% endblock %}
+
+{% block content %}
+<div class="contactsection" id="contact">
+        <h2>Contact</h2>
+        <div class="containerforform">
+
+        <form method="POST" name="karthick-contact" data-netlify="true">
+                {% csrf_token %}
+        <input type="hidden" name="form-name" value="karthick-contact" />
+
+        <label for="title">Name</label>
+        <input type="text" name="title" id="name" required/>
+        
+        <label for="summary">Message</label>
+        <textarea id="message" rows="4" cols="50"></textarea>
+
+        <button type="submit" id="submit">Send Message</button>
+        </form>
+</div>
+{% endblock %}

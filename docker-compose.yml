@@ -1,0 +1,55 @@
+services:
+
+  redis:
+    image: redis:7.0.11-alpine
+
+    ports:
+      - "6379:6379"
+    networks:
+      - ecomm_net
+
+  django-ecomm:
+    container_name: djangoecomm
+    build: 
+      context: ./ecommapp
+    command: python manage.py runserver 0.0.0.0:8000
+    working_dir: /usr/src/app
+    volumes:
+      - ./ecommapp:/usr/src/app
+    ports:
+      - 8001:8000
+    environment:
+      - DEBUG=TRUE
+      - SECRET_KEY=0807YT54ERTY8JHGBI
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - CARTID=cartid
+    depends_on:
+      - redis
+    networks:
+      - ecomm_net
+
+
+  
+  celery:
+    container_name: celerycontainer
+    build: 
+      context: ./ecommapp
+    command: celery --app=ecommapp worker -l INFO
+    working_dir: /usr/src/app
+    volumes:
+      - ./ecommapp:/usr/src/app/
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=0807YT54ERTY8JHGBI
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+      - CARTID=cartid
+
+    depends_on:
+      - redis
+    networks:
+      - ecomm_net
+    
+networks:
+  ecomm_net:
+    driver: bridge
+        

@@ -1,0 +1,8 @@
+Hello,
+
+Thank you for signing up with {{ email | safe}}
+
+This is a email confirmation of the same. 
+
+Kind Regards,
+EcommApp Admin
